@@ -1,0 +1,100 @@
+Начало: 
+python manage.py shell
+
+Импорт всего:
+from pages.models import *
+
+----
+
+Категории: 
+Category.objects.create(name='Название')
+
+Названия:
+Technology
+Economic
+Music
+Games
+
+----
+
+Юзвери: 
+user = User.objects.create_user(username='Ник', first_name='Имя')
+Author.objects.create(authorUser=user)
+
+Имена:
+Petya
+MegaAuthor123
+
+----
+
+Посты:
+Post.objects.create(author=Author.objects.get(authorUser=User.objects.get(username='Ник')), type='BL', title='Заголовок', text='Текст')
+
+type='BL' - блог
+type='NW' - новость
+
+----
+
+Категории к постам:
+post=Post.objects.get(pk=1) - Переменная для поста, чтобы сократить. В скобках айди
+post.category.add(Category.objects.get(name='Название')) 
+
+----
+
+Посты:
+post=Post.objects.get(pk=1) - Переменная для поста. В скобках айди
+Comment.objects.create(commentPost=post, commentUser=User.objects.get(username='Ник'), text='Текст')    
+
+----
+
+Спам лайками:
+Post.objects.get(pk=1).like() - В скобках айди
+Comment.objects.get(pk=1).like() 
+
+----
+
+Апдейт рейтинга: 
+Author.objects.get(authorUser=User.objects.get(username='Ник')).update_rating()
+
+----
+
+Принты лучшего:
+
+Автор: 
+best = Author.objects.all().order_by('-authorRating').values('authorUser', 'authorRating')[0]
+
+Возвращает id автора, а не ник, поэтому шаманим дальше
+
+author_best = Author.objects.get(id=best.get('authorUser'))
+author_best = author_best.authorUser.username
+Добыли ник. В переменной best уже есть рейтинг, поэтому...
+print(author_best, best)
+
+Пост:
+best_post = Post.objects.all().order_by('-rating').values('id', 'author', 'date', 'title', 'rating')[0]
+Лучшая статья в виде словаря. Дальше по значениям, чтобы распечаталось красиво. Айди нужно для выбора комментариев к посту
+author_best_post = Author.objects.get(id=best_post.get('author')) 
+author_best_post = author_best_post.authorUser.username 
+Добыли ник
+date = best_post.get('date')
+title = best_post.get('title')
+preview = Post.objects.get(id=best_post.get('id')).preview  
+print(author_best_post, date, title, preview)
+
+Комментарии:
+all_comm = Comment.objects.filter(commentPost=best_post.get('id'))                                                
+print(all_comm)
+
+В модель добавила метод __str__ с распечаткой всего нужного, поэтому так коротко и без шаманства.
+Сказали, вывести список постов со всем содержимым. Никто ж не запрещал его просто распечатать ¯\_(ツ)_/¯
+А так это всё в отдельные геты можно будет вывести, если понадобится
+
+
+
+
+
+
+
+
+
+
