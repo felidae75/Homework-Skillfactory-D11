@@ -29,10 +29,16 @@ class Author(models.Model):
         self.save()
         # Надеюсь, оно правильно считает...
 
+    def __str__(self):
+        return f"{self.authorUser.username}"
+
 
 class Category(models.Model):
     # Категория статьи
     name = models.CharField(max_length=32, unique=True, default='no_category')
+
+    def __str__(self):
+        return self.name
 
 
 # Новость или статья
@@ -66,9 +72,12 @@ class Post(models.Model):
     def preview(self):
         return f"{self.text[0:124]} ..."
 
+    @property
+    def get_category_name(self):
+        return self.category.all()
+
     def __str__(self):
-        return f"{self.category.all()}"
-    # Для теста с принтами, чтобы понять, что категории назначились
+        return (f"{self.type}, {self.date}, {self.category.all()}, {self.author}, {self.title}, {self. text}")
 
 
 class PostCategory(models.Model):

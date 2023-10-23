@@ -1,0 +1,64 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<h1>Все статьи</h1>
+<p>Количество статей: {{ news|length }}</p>
+<hr> <br>
+{% if news %}
+    <table class="table">
+        <tr>
+<!--            <th scope="col">-->
+<!--                Тип, категории-->
+<!--            </th>-->
+            <th scope="col">
+                Дата
+            </th>
+            <th scope="col">
+                Автор
+            </th>
+            <th scope="col">
+                Заголовок
+            </th>
+            <th scope="col">
+                Текст
+            </th>
+            <th scope="col">
+                Рейтинг
+            </th>
+        </tr>
+        {% for post in news %}
+        <tr>
+<!--            <td>-->
+<!--                {{ post_id.type }}; {{ post_id.get_category_name }}-->
+<!--            </td>-->
+            <td>
+<!--                {{ post_id.date }}-->
+                {{ post.date|date:'d m y' }}
+            </td>
+            <td>
+                {{ post.author }}
+            </td>
+            <td>
+                {{ post.title|censor }}
+            </td>
+            <td>
+<!--                {{ post_id.preview }}-->
+<!--                {{ post.text|truncatewords:20 }}-->
+                {{ post.text|truncatechars:20|censor }}
+            </td>
+            <td>
+                {{ post.rating }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <h3>Статей нет</h3>
+{% endif %}
+{% endblock content %}
