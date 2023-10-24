@@ -1,0 +1,39 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Search
+{% endblock title %}
+{% block content %}
+<h1>Search</h1>
+<h3>(Всего новостей: {{ news|length }})</h3>
+<form method='GET'>
+    {{ filter.form }}
+    <input class="btn btn-primary" type='submit' value='Найти'>
+</form>
+<table class="table">
+    <tr>
+        <th scope="col">
+            Заголовок
+        </th>
+        <th scope="col">
+            Дата публикации
+        </th>
+        <th scope="col">
+            Текст
+        </th>
+    </tr>
+    {% for post in filter.qs %}
+        <tr>
+            <td>
+                <a href="{{ post.get_absolute_url }}">{{ post.title|censor }}</a>
+            </td>
+            <td>
+                {{ post.date|date:'d.m.Y' }}
+            </td>
+            <td>
+                {{ post.text|truncatechars:50|censor }}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock content %}

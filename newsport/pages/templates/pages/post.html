@@ -2,7 +2,7 @@
 {% load custom_filters %}
 
 {% block title %}
-Posts
+Post
 {% endblock title %}
 
 {% block content %}
@@ -13,7 +13,11 @@ Posts
     <p>{{ post.date|date:'d m y, H:i' }}</p>
     <hr>
     <p>{{ post.text|censor }}</p>
+
 {% else %}
     <h3>Страница не существует</h3>
 {% endif %}
+
+
+
 {% endblock content %}

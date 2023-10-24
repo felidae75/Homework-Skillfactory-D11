@@ -30,7 +30,7 @@ class Author(models.Model):
         # Надеюсь, оно правильно считает...
 
     def __str__(self):
-        return f"{self.authorUser.username}"
+        return self.authorUser.username
 
 
 class Category(models.Model):
@@ -76,8 +76,11 @@ class Post(models.Model):
     def get_category_name(self):
         return self.category.all()
 
+    def get_author_name(self):
+        return self.author.authorUser.username
+
     def __str__(self):
-        return (f"{self.type}, {self.date}, {self.category.all()}, {self.author}, {self.title}, {self. text}")
+        return f"({self.type}, {self.date}, {self.category.all()}, {self.author}, {self.title}, {self. text})"
 
 
 class PostCategory(models.Model):

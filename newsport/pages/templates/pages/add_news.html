@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Add news
+{% endblock title %}
+
+{% block content %}
+<h1>Добавить</h1>
+
+{% include 'parts/paginator.html' %}
+
+<!--<form method="POST">-->
+<!--   {% csrf_token %}-->
+<!--   <label for="title" class="form-label">Заголовок</label>-->
+<!--   <input name="title" id="title" class="form-control" type="text">-->
+<!--   <label for="text" class="form-label">Текст статьи</label>-->
+<!--   <input name="text" class="form-control text-post" id="text" type="text">-->
+
+<!--   <label for="select" class="form-label">Type</label>-->
+<!--   <select name="type" id="select" class="form-select">-->
+<!--       <option selected>Open this select menu</option>-->
+<!--       {% for type in choices %}-->
+<!--       <option value="{{ type.0 }}">-->
+<!--           {{ type.1 }}-->
+<!--       </option>-->
+<!--       {% endfor %}-->
+<!--   </select>-->
+<!--   <input class="btn btn-success" type="submit" value="Add">-->
+<!--</form>-->
+
+<form method="POST">
+   {% csrf_token %}
+   {{ form }}
+   <br>
+   <input class="btn btn-info" type="submit" value="Add">
+   <br>
+</form>
+
+{% endblock content %}

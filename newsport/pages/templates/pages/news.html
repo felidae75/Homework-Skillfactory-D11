@@ -9,7 +9,15 @@ News
 <h1>Все статьи</h1>
 <p>Количество статей: {{ news|length }}</p>
 <hr> <br>
+<a href="add" class="add-news"><button class="btn btn-info">Написать пост</button></a>
 {% if news %}
+<!--    <form method="GET">-->
+<!--   {{ filter.form }}-->
+<!--   <input class="btn btn-primary me-2 btn-outline-light" type="submit" value="Найти">-->
+<!--    </form>-->
+    <br> <br>
+    <a href="search" class="search-btn">Расширенный поиск</a>
+    <br> <br>
     <table class="table">
         <tr>
 <!--            <th scope="col">-->
@@ -34,10 +42,10 @@ News
         {% for post in news %}
         <tr>
 <!--            <td>-->
-<!--                {{ post_id.type }}; {{ post_id.get_category_name }}-->
+<!--                {{ post.type }}; {{ post.get_category_name }}-->
 <!--            </td>-->
             <td>
-<!--                {{ post_id.date }}-->
+<!--                {{ post.date }}-->
                 {{ post.date|date:'d m y' }}
             </td>
             <td>
@@ -47,9 +55,9 @@ News
                 {{ post.title|censor }}
             </td>
             <td>
-<!--                {{ post_id.preview }}-->
+<!--                {{ post.preview }}-->
 <!--                {{ post.text|truncatewords:20 }}-->
-                {{ post.text|truncatechars:20|censor }}
+                {{ post.text|truncatechars:20|censor }} <a href="{{ post.id }}" class="open-post"><span>Читать далее...</span></a>
             </td>
             <td>
                 {{ post.rating }}
@@ -64,4 +72,29 @@ News
 
 {% include 'parts/paginator.html' %}
 
+<!--<form method="POST">-->
+<!--   {% csrf_token %}-->
+<!--   <label for="title" class="form-label">Заголовок</label>-->
+<!--   <input name="title" id="title" class="form-control" type="text">-->
+<!--   <label for="text" class="form-label">Текст статьи</label>-->
+<!--   <input name="text" class="form-control text-post" id="text" type="text">-->
+
+<!--   <label for="select" class="form-label">Type</label>-->
+<!--   <select name="type" id="select" class="form-select">-->
+<!--       <option selected>Open this select menu</option>-->
+<!--       {% for type in choices %}-->
+<!--       <option value="{{ type.0 }}">-->
+<!--           {{ type.1 }}-->
+<!--       </option>-->
+<!--       {% endfor %}-->
+<!--   </select>-->
+<!--   <input class="btn btn-success" type="submit" value="Add">-->
+<!--</form>-->
+
+<!--<form method="POST">-->
+<!--   {% csrf_token %}-->
+<!--   {{ form }}-->
+<!--   <input class="btn btn-success" type="submit" value="Add">-->
+<!--</form>-->
+<br> <br>
 {% endblock content %}
