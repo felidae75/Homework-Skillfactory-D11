@@ -8,16 +8,32 @@ Post
 {% block content %}
 
 {% if post %}
-    <h1>{{ post.title|censor }}</h1>
-    <h3>Автор: {{ post.author }}</h3>
-    <p>{{ post.date|date:'d m y, H:i' }}</p>
-    <hr>
-    <p>{{ post.text|censor }}</p>
+<div class="card">
+    <div class="card-header">
+        <h3>{{ post.title|censor }}</h3>
+        <div>
+            Автор: <span class="badge bg-info">{{ post.author }}</span>
+        </div>
+        <div>
+            <span>{{ post.date|date:'d m y, H:i' }}</span>
+        </div>
+    </div>
+    <div class="card-body">
+        <span>{{ post.text|censor }}</span>
+    </div>
+    <div>
+        <span class="card-body"><a href="{% url 'pages:update_post' post.id %}">Редактировать</a> </span>
+        <span class="card-body"><a href="{% url 'pages:del_post' post.id %}">Удалить</a> </span>
+        <br>
+        <br>
+    </div>
+
+</div>
 
 {% else %}
     <h3>Страница не существует</h3>
 {% endif %}
 
-
+<br><br>
 
 {% endblock content %}

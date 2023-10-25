@@ -38,6 +38,9 @@ News
             <th scope="col">
                 Рейтинг
             </th>
+            <th scope="col">
+                Действия
+            </th>
         </tr>
         {% for post in news %}
         <tr>
@@ -52,16 +55,24 @@ News
                 {{ post.author }}
             </td>
             <td>
-                {{ post.title|censor }}
+                <a href="{{ post.id }}" class="open-post">{{ post.title|censor }}</a>
             </td>
             <td>
 <!--                {{ post.preview }}-->
 <!--                {{ post.text|truncatewords:20 }}-->
-                {{ post.text|truncatechars:20|censor }} <a href="{{ post.id }}" class="open-post"><span>Читать далее...</span></a>
+                {{ post.text|truncatechars:20|censor }}
             </td>
             <td>
                 {{ post.rating }}
             </td>
+            <th>
+                <a href="{% url 'pages:update_post' post.id  %}">
+                    Ред.
+                </a> ||
+                <a href="{% url 'pages:del_post' post.id %}">
+                    Удалить
+                </a>
+            </th>
         </tr>
         {% endfor %}
     </table>

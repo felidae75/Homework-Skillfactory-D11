@@ -68,16 +68,17 @@ class Post(models.Model):
         self.rating -= 1
         self.save()
 
-    @property
     def preview(self):
         return f"{self.text[0:124]} ..."
 
-    @property
     def get_category_name(self):
         return self.category.all()
 
     def get_author_name(self):
         return self.author.authorUser.username
+
+    def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с постом
+        return f'/news/{self.id}'
 
     def __str__(self):
         return f"({self.type}, {self.date}, {self.category.all()}, {self.author}, {self.title}, {self. text})"

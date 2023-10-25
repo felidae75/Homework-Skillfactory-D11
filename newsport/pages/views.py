@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.views import View
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.urls import reverse_lazy
 
 from .filters import *
 from .forms import *
@@ -23,13 +24,13 @@ class PostView(ListView):
         return context
 
     # def post(self, request, *args, **kwargs):
-        # author = request.POST['author']
-        # title = request.POST['title']
-        # type = request.POST['type']
-        # text = request.POST['text']
-        # post = Post(title=title, type=type, text=text)  # создаём новый пост и сохраняем
-        # post.save()
-        # return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос
+    # author = request.POST['author']
+    # title = request.POST['title']
+    # type = request.POST['type']
+    # text = request.POST['text']
+    # post = Post(title=title, type=type, text=text)  # создаём новый пост и сохраняем
+    # post.save()
+    # return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос
 
     def post(self, request, *args, **kwargs):
         form = CreatePostForm(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
@@ -70,32 +71,31 @@ class PostSearch(ListView):
         return context
 
 
-class CreatePost(ListView):
-    model = Post
-    template_name = 'pages/add_news.html'
-    context_object_name = 'add_news'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['choices'] = Post.TYPE_LIST
-        context['form'] = CreatePostForm()
-        return context
-
-    # def post(self, request, *args, **kwargs):
-        # author = request.POST['author']
-        # title = request.POST['title']
-        # type = request.POST['type']
-        # text = request.POST['text']
-        # post = Post(title=title, type=type, text=text)  # создаём новый пост и сохраняем
-        # post.save()
-        # return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос
-
-    def post(self, request, *args, **kwargs):
-        form = CreatePostForm(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
-        if form.is_valid():  # если пользователь ввёл всё правильно и нигде не накосячил, то сохраняем новый пост
-            form.save()
-        return super().get(request, *args, **kwargs)
-
+# class CreatePost(ListView):
+#     model = Post
+#     template_name = 'pages/add_news.html'
+#     context_object_name = 'add_news'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['choices'] = Post.TYPE_LIST
+#         context['form'] = CreatePostForm
+#         return context
+#
+#     # def post(self, request, *args, **kwargs):
+#     # author = request.POST['author']
+#     # title = request.POST['title']
+#     # type = request.POST['type']
+#     # text = request.POST['text']
+#     # post = Post(title=title, type=type, text=text)  # создаём новый пост и сохраняем
+#     # post.save()
+#     # return super().get(request, *args, **kwargs)  # отправляем пользователя обратно на GET-запрос
+#
+#     def post(self, request, *args, **kwargs):
+#         form = CreatePostForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return super().get(request, *args, **kwargs)
 
 
 # class MiniPostSearch(ListView):
@@ -109,3 +109,23 @@ class CreatePost(ListView):
 #         context['filter'] = MiniPostFilter(self.request.GET, queryset=self.get_queryset())
 #
 #         return context/
+
+
+class CreatePostView(CreateView):
+    template_name = 'pages/add_news.html'
+    form_class = CreatePostForm
+
+
+class PostUpdate(UpdateView):
+    template_name = 'pages/add_news.html'
+    form_class = CreatePostForm
+
+    def get_object(self, **kwargs):
+        id_post = self.kwargs.get('pk')
+        return Post.objects.get(pk=id_post)
+
+
+class PostDelete(DeleteView):
+    template_name = 'pages/del_news.html'
+    queryset = Post.objects.all()
+    success_url = reverse_lazy('pages:posts_view')

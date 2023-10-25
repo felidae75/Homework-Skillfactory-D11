@@ -1,0 +1,34 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Delete Post
+{% endblock title %}
+
+{% block content %}
+
+<h3>Delete this product?</h3>
+<div class="card">
+ <div class="card-header">
+   <h3>
+     {{ post.title }}
+   </h3>
+   <div>
+     Автор: <span class="badge bg-info">{{ post.author }}</span>
+   </div>
+ </div>
+    <div class="card-body">
+   {{ post.text|truncatechars:20 }}
+ </div>
+</div>
+
+<br>
+
+<form method="POST">
+ {% csrf_token %}
+   <input class="btn btn-info" type="submit" value="Delete">
+</form>
+
+
+
+{% endblock content %}
