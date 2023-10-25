@@ -11,7 +11,7 @@ Login
 <br><br>
 <p>Вы не в системе</p>
 <br><br>
-<form method="post" action="{% url 'accounts:login' %}" class="py-3">
+<form method="post" action="{% url 'auth:login' %}" class="py-3">
     {% csrf_token %}
     <table>
         <tr>
@@ -31,7 +31,7 @@ Login
 
 <br><br>
 
-<a class="btn btn-info" href="{% url 'accounts:signup' %}"> Регистрация </a>
+<a class="btn btn-info" href="{% url 'auth:signup' %}"> Регистрация </a>
 
 <br><br>
 

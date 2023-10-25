@@ -91,6 +91,7 @@ class PostCategory(models.Model):
 
 
 class Comment(models.Model):
+    # Модель комментария
     commentPost = models.ForeignKey(Post, on_delete=models.CASCADE)
     commentUser = models.ForeignKey(User, on_delete=models.CASCADE)
 

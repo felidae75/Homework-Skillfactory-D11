@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+<!--{% load custom_filters %}-->
+
+{% block title %}
+Профиль
+{% endblock title %}
+
+{% block content %}
+<br>
+<h2>Страница авторизованного пользователя "{{request.user.username}}"</h2>
+<br>
+<div>
+    <h6> Информация </h6>
+</div>
+<br>
+
+{% if is_not_author %}
+    <a href="{% url 'auth:upgrade' %}"><button type="button" class="btn btn-info">Стать автором</button></a>
+{% else %}
+    <span>Приветствуем, автор!</span>
+    <br> <br>
+    <a href="{% url 'pages:create_post' %}" class="add-news"><button class="btn btn-info">Написать пост</button></a>
+{% endif %}
+<br><br>
+<a href="{% url 'account_logout' %}"><button class="btn btn-info"> Выйти </button></a>
+<!--<button class="btn btn-info"> <a href="{% url 'auth:logout' %}">Выйти</a> </button>-->
+<br><br>
+{% endblock content %}

@@ -13,19 +13,21 @@
        <li><a href="#" class="nav-link px-2 text-white">none</a></li>
      </ul>
 
-
      {% if request.user.username %}
 <!--     Если пользователь авторизован, показывается имя и кнопка выхода-->
-     <div class="text-end">
-       <span class="username">{{request.user.username}}</span>
-       <button type="button" class="btn btn-light"><a href="{% url 'accounts:logout' %}">Logout</a> </button>
-     </div>
+        <div class="text-end">
+          <a href="{% url 'auth:user_page' %}"><span class="username badge bg-info">{{request.user.username}}</span></a>
+          <a href="{% url 'account_logout' %}"><button type="button" class="btn btn-light">Logout</button></a>
+<!--      <button type="button" class="btn btn-light"><a href="{% url 'auth:logout' %}">Logout</a> </button>-->
+        </div>
      {% else %}
 <!--     Если не авторизован, предлагает авторизацию-->
-     <div class="text-end">
-       <button type="button" class="btn btn-light"><a href="{% url 'accounts:signup' %}">Reg</a> </button>
-       <button type="button" class="btn btn-info"><a href="{% url 'accounts:logout' %}">Login</a></button>
-     </div>
+        <div class="text-end">
+          <a href="{% url 'account_signup' %}"><button type="button" class="btn btn-light">Reg</button></a>
+<!--      <button type="button" class="btn btn-light"><a href="{% url 'auth:signup' %}">Reg</a> </button>-->
+         <a href="{% url 'account_login' %}"><button type="button" class="btn btn-info">Login</button></a>
+<!--      <button type="button" class="btn btn-info"><a href="{% url 'auth:login' %}">Login</a></button>-->
+        </div>
       {% endif %}
 
    </div>

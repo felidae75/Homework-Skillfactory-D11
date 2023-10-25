@@ -1,7 +1,8 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin  # Для ограничения доступа
+from django.core.paginator import Paginator # Для добавления страниц
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -25,6 +26,7 @@ class PostView(ListView):
         # context['filter'] = MiniPostFilter(self.request.GET, queryset=self.get_queryset())
         context['choices'] = Post.TYPE_LIST
         context['form'] = CreatePostForm()
+        context['is_not_author'] = not self.request.user.groups.filter(name='author').exists()
         return context
 
     # def post(self, request, *args, **kwargs):
@@ -119,15 +121,17 @@ class PostSearch(ListView):
 
 
 # Создать пост
-class CreatePostView(CreateView):
+class CreatePostView(PermissionRequiredMixin, CreateView):
     template_name = 'pages/add_news.html'
     form_class = CreatePostForm
+    permission_required = ('pages.add_post',)
 
 
 # Отредактировать пост
-class PostUpdate(LoginRequiredMixin, UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
     template_name = 'pages/add_news.html'
     form_class = CreatePostForm
+    permission_required = ('pages.update_post',)
 
     def get_object(self, **kwargs):
         id_post = self.kwargs.get('pk')
@@ -135,7 +139,8 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 
 
 # Удалить пост
-class PostDelete(LoginRequiredMixin, DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
     template_name = 'pages/del_news.html'
     queryset = Post.objects.all()
     success_url = reverse_lazy('pages:posts_view')
+    permission_required = ('pages.del_post',)

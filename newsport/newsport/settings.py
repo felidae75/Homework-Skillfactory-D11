@@ -38,14 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    # New app for pages
     'django.contrib.sites',
     'django.contrib.flatpages',
-
+    # New app for filters
     'django_filters',
+    # New app for auth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... здесь нужно указать провайдеры, которые планируете использовать
+    'allauth.socialaccount.providers.google',
 
+    # Users app
     'pages',
-    'accounts',
+    'accounts_test',
+    # 'accounts',
+
 ]
 
 SITE_ID = 1
@@ -60,6 +69,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'newsport.urls'
@@ -136,5 +146,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# New
+
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/news/'
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+# Переопределить форму allauth, чтобы добавляла нового пользователя в группу
+ACCOUNT_FORMS = {'signup': 'accounts_test.forms.BasicSignupForm'}
