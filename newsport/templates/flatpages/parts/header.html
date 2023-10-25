@@ -13,10 +13,21 @@
        <li><a href="#" class="nav-link px-2 text-white">none</a></li>
      </ul>
 
+
+     {% if request.user.username %}
+<!--     Если пользователь авторизован, показывается имя и кнопка выхода-->
      <div class="text-end">
-       <button type="button" class="btn btn-light">Login</button>
-       <button type="button" class="btn btn-info">Sign-up</button>
+       <span class="username">{{request.user.username}}</span>
+       <button type="button" class="btn btn-light"><a href="{% url 'accounts:logout' %}">Logout</a> </button>
      </div>
+     {% else %}
+<!--     Если не авторизован, предлагает авторизацию-->
+     <div class="text-end">
+       <button type="button" class="btn btn-light"><a href="{% url 'accounts:signup' %}">Reg</a> </button>
+       <button type="button" class="btn btn-info"><a href="{% url 'accounts:logout' %}">Login</a></button>
+     </div>
+      {% endif %}
+
    </div>
  </div>
 </header>

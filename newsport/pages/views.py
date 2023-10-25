@@ -1,6 +1,8 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -123,7 +125,7 @@ class CreatePostView(CreateView):
 
 
 # Отредактировать пост
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'pages/add_news.html'
     form_class = CreatePostForm
 
@@ -133,7 +135,7 @@ class PostUpdate(UpdateView):
 
 
 # Удалить пост
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
     template_name = 'pages/del_news.html'
     queryset = Post.objects.all()
     success_url = reverse_lazy('pages:posts_view')
