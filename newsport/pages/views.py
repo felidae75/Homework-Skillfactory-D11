@@ -9,6 +9,7 @@ from .forms import *
 from .models import *
 
 
+# Список новостей
 class PostView(ListView):
     model = Post
     template_name = 'pages/news.html'
@@ -16,6 +17,7 @@ class PostView(ListView):
     ordering = ['-date']
     paginate_by = 10
 
+    # Метод добавления новости. Не используется, так как пошёл на отдельную страницу
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['filter'] = MiniPostFilter(self.request.GET, queryset=self.get_queryset())
@@ -39,12 +41,14 @@ class PostView(ListView):
         return super().get(request, *args, **kwargs)
 
 
+# Страница отдельной новости
 class PostDetail(DetailView):
     model = Post
     template_name = 'pages/post.html'
     context_object_name = 'post'
 
 
+# Сортировщик новостей
 class PostsSort(View):
     def get(self, request):
         posts = Post.objects.order_by('-date')
@@ -58,6 +62,7 @@ class PostsSort(View):
         return render(request, 'pages/news.html', data)
 
 
+# Поиск новостей
 class PostSearch(ListView):
     model = Post
     template_name = 'pages/search.html'
@@ -111,11 +116,13 @@ class PostSearch(ListView):
 #         return context/
 
 
+# Создать пост
 class CreatePostView(CreateView):
     template_name = 'pages/add_news.html'
     form_class = CreatePostForm
 
 
+# Отредактировать пост
 class PostUpdate(UpdateView):
     template_name = 'pages/add_news.html'
     form_class = CreatePostForm
@@ -125,6 +132,7 @@ class PostUpdate(UpdateView):
         return Post.objects.get(pk=id_post)
 
 
+# Удалить пост
 class PostDelete(DeleteView):
     template_name = 'pages/del_news.html'
     queryset = Post.objects.all()
