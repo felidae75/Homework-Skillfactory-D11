@@ -16,7 +16,7 @@
      {% if request.user.username %}
 <!--     Если пользователь авторизован, показывается имя и кнопка выхода-->
         <div class="text-end">
-          <a href="{% url 'auth:user_page' %}"><span class="username badge bg-info">{{request.user.username}}</span></a>
+          <a href="{% url 'pages:user_page' %}"><span class="username badge bg-info">{{request.user.username}}</span></a>
           <a href="{% url 'account_logout' %}"><button type="button" class="btn btn-light">Logout</button></a>
 <!--      <button type="button" class="btn btn-light"><a href="{% url 'auth:logout' %}">Logout</a> </button>-->
         </div>

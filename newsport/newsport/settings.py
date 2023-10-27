@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+# from dotenv import load_dotenv
+from decouple import config
+
+# load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +58,7 @@ INSTALLED_APPS = [
     'pages',
     'accounts_test',
     # 'accounts',
+    'appointment'
 
 ]
 
@@ -164,6 +169,22 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 # Переопределить форму allauth, чтобы добавляла нового пользователя в группу
 ACCOUNT_FORMS = {'signup': 'accounts_test.forms.BasicSignupForm'}
+
+EMAIL_HOST = 'smtp.yandex.ru' # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465 # порт smtp сервера тоже одинаковый
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_USER = 'EMAIL_HOST_USER'
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD'
+EMAIL_USE_SSL = True # Яндекс использует ssl, подробнее о том, что это, почитайте на Википедии, но включать его здесь обязательно
+
+SERVER_EMAIL = 'SERVER_EMAIL' # это будет у нас вместо аргумента FROM в массовой рассылке
+
+DEFAULT_FROM_EMAIL = 'test@test.com'  # здесь указываем уже свою ПОЛНУЮ почту с которой будут отправляться письма
+
+if DEBUG:
+   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -18,11 +18,8 @@ News
     <br> <br>
     <a href="search" class="search-btn">Расширенный поиск</a>
     <br> <br>
-    <table class="table">
+    <table class="table table-striped table-hover">
         <tr>
-<!--            <th scope="col">-->
-<!--                Тип, категории-->
-<!--            </th>-->
             <th scope="col">
                 Дата
             </th>
@@ -36,6 +33,9 @@ News
                 Текст
             </th>
             <th scope="col">
+                Категории
+            </th>
+            <th scope="col">
                 Рейтинг
             </th>
             <th scope="col">
@@ -44,9 +44,6 @@ News
         </tr>
         {% for post in news %}
         <tr>
-<!--            <td>-->
-<!--                {{ post.type }}; {{ post.get_category_name }}-->
-<!--            </td>-->
             <td>
 <!--                {{ post.date }}-->
                 {{ post.date|date:'d m y' }}
@@ -63,8 +60,14 @@ News
                 {{ post.text|truncatechars:20|censor }}
             </td>
             <td>
+                {% for c in post.category.all %}
+                    <a href="{% url 'pages:categories' %}{{ c.pk }}">{{ c.name }}</a> |
+                {% endfor %}
+            </td>
+            <td>
                 {{ post.rating }}
             </td>
+
             <th>
                 <a href="{% url 'pages:update_post' post.id  %}">
                     Ред.

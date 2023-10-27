@@ -1,0 +1,57 @@
+<!--  наследуемся от шаблона default.html -->
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %} <!-- не забываем заранее загружать наши фильтры! -->
+
+<!-- Название у нас будет из заголовка -->
+{% block title %} Category {% endblock title %}
+
+{% block content %}
+<h1>Категория {{ category }}</h1>
+<br>
+<hr>
+<br>
+{{ subscribers }}
+{% if is_not_subscribed %}
+    <a class="btn btn-info" href="{% url 'pages:subscribe' category.pk %}">Подписаться</a>
+{% else %}
+    <p>Вы подписаны на данную категорию.</p>
+    <a class="btn btn-info" href="{% url 'pages:unsubscribe' category.pk %}">Отписаться</a>
+{% endif %}
+<br>
+<br>
+
+{% if post %}
+    <table class="table table-striped table-hover">
+        <tr>
+            <th scope="col">Дата</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Заголовок</th>
+            <th scope="col">Текст</th>
+        </tr>
+        {% for p in post %}
+            <tr>
+                <td>{{ p.date }}</td>
+
+                <td>{{ p.author }}</td>
+
+                <td><a href="{% url 'pages:posts_view' %}{{ p.id }}">{{ p.title }}</a></td>
+
+                <td>{{ p.text }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+
+        {% include 'parts/paginator.html' %}
+
+    {% else %}
+        <h2>Новостей нет!</h2>
+    {% endif %}
+
+{% endblock content %}
+
+
+
+
+
+

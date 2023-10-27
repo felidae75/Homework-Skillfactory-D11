@@ -36,9 +36,10 @@ class Author(models.Model):
 class Category(models.Model):
     # Категория статьи
     name = models.CharField(max_length=32, unique=True, default='no_category')
+    subscribers = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 
 # Новость или статья
@@ -72,7 +73,7 @@ class Post(models.Model):
         return f"{self.text[0:124]} ..."
 
     def get_category_name(self):
-        return self.category.all()
+        return f'{self.category.all()}'
 
     def get_author_name(self):
         return self.author.authorUser.username
@@ -88,6 +89,9 @@ class PostCategory(models.Model):
     # Связь многие со многими
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.categoryThrough}'
 
 
 class Comment(models.Model):

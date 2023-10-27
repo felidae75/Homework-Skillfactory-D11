@@ -8,7 +8,7 @@ class PostFilter(FilterSet):
         fields = {'author': ['exact'], 'date': ['gt'], 'type': ['exact'], 'title': ['icontains'], 'rating': ['gt']}
 
 
-class MiniPostFilter(FilterSet):
-    class Meta:
-        model = Post
-        fields = {'title': ['icontains'], 'type': ['exact']}
+# class MiniPostFilter(FilterSet):
+#     class Meta:
+#         model = Post
+#         fields = {'title': ['icontains'], 'type': ['exact']}

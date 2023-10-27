@@ -22,6 +22,9 @@ Search
         <th scope="col">
             Текст
         </th>
+        <th scope="col">
+                Категории
+        </th>
     </tr>
     {% for post in filter.qs %}
         <tr>
@@ -33,6 +36,11 @@ Search
             </td>
             <td>
                 {{ post.text|truncatechars:50|censor }}
+            </td>
+            <td>
+                {% for c in post.category.all %}
+                    <a href="{% url 'pages:categories'%}{{ c.pk }}">{{ c.name }}</a>
+                {% endfor %}
             </td>
         </tr>
     {% endfor %}

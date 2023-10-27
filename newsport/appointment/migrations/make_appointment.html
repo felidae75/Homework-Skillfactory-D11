@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Make an appointment
+{% endblock title %}
+{% block content %}
+<h1>Search</h1>
+<h3>(Всего новостей: {{ news|length }})</h3>
+<form method='GET'>
+    {{ filter.form }}
+    <input class="btn btn-primary" type='submit' value='Найти'>
+</form>
+ <h1>Make an appointment</h1>
+    <form action="{% url 'appointments:make_appointment' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="client_name">Your name</label>
+        <input type="text" name="client_name"><br>
+        <label for="message">Short description of your issue</label>
+        <input type="text" name="message"><br>
+        <label for="date">Choose time</label>
+        <input type="date" name="date">.<br>
+        <input type="submit">
+    </form>
+
+    <br>
+    <a href="/news/"> <--Вернуться к новостям </a>
+{% endblock content %}

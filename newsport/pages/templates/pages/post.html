@@ -17,6 +17,12 @@ Post
         <div>
             <span>{{ post.date|date:'d m y, H:i' }}</span>
         </div>
+        <div>
+            Категории:
+            {% for c in post.category.all %}
+                <a href="{% url 'pages:categories'%}{{ c.pk }}">{{ c.name }}</a> |
+            {% endfor %}
+        </div>
     </div>
     <div class="card-body">
         <span>{{ post.text|censor }}</span>
