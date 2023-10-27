@@ -10,3 +10,5 @@ def notify_subscribers(sender, instance, **kwargs):
     # Реагирует на новую запись "категорий" в БД
     if kwargs['action'] == 'post_add':
         new_post_subscription(instance)
+
+

@@ -54,11 +54,13 @@ INSTALLED_APPS = [
     # ... здесь нужно указать провайдеры, которые планируете использовать
     'allauth.socialaccount.providers.google',
 
+    'django_apscheduler',
+
     # Users app
     'pages',
     'accounts_test',
     # 'accounts',
-    'appointment'
+    'appointment',
 
 ]
 
@@ -168,7 +170,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 # Переопределить форму allauth, чтобы добавляла нового пользователя в группу
@@ -188,3 +191,11 @@ DEFAULT_FROM_EMAIL = 'test@test.com'  # здесь указываем уже с�
 
 if DEBUG:
    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+   # Если письмо не отправляется в мир, оно отправляется в консоль
+
+
+# формат даты, которую будет воспринимать наш задачник
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+# если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

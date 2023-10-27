@@ -35,3 +35,8 @@ def new_post_subscription(instance):
 
         msg.attach_alternative(html, 'text/html')
         msg.send()
+
+
+def week_posts_subscription(instance):
+    template = 'pages/mail_weekly_posts.html'
+
