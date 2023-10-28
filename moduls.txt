@@ -1,0 +1,9 @@
+
+pip install django
+pip install django-apscheduler
+pip install django-filter
+pip install django-allauth
+pip install django-apscheduler 
+pip install python-dotenv
+pip install python-decouple
+pip install django-apscheduler
