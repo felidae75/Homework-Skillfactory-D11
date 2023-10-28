@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.core.validators import MinValueValidator
 from django.db.models import Sum
 # Последнее - чтобы суммировало рейтинг
@@ -80,6 +81,10 @@ class Post(models.Model):
 
     def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с постом
         return f'/news/{self.id}'
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs) # сначала вызываем метод родителя, чтобы объект сохранился
+    #     cache.delete(f'post-{self.pk}') # затем удаляем его из кэша, чтобы сбросить его
 
     def __str__(self):
         return f"({self.type}, {self.date}, {self.category.all()}, {self.author}, {self.title}, {self. text})"
