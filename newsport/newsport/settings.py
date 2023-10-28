@@ -236,13 +236,13 @@ LOGGING = {
         'error_and_critical': {
             'format': '             %(exc_info)s'
         },
-        'general_': {
+        'general': {
             'format': '%(asctime)s  %(levelname)s  %(module)s  %(message)s'
         },
-        'errors_': {
+        'errors': {
             'format': '%(asctime)s  %(levelname)s  %(message)s  %(pathname)s  %(exc_info)s'
         },
-        'email_': {
+        'email': {
             'format': '%(asctime)s  %(levelname)s  %(message)s  %(pathname)s'
         },
     },
@@ -279,20 +279,20 @@ LOGGING = {
             'level': 'INFO',
             'filters': ['require_debug_false'],
             'class': 'logging.FileHandler',
-            'filename': 'logs/general.log',
-            'formatter': 'general_'
+            'filename': 'general.log',
+            'formatter': 'general'
         },
         'errors_log': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': 'logs/errors.log',
-            'formatter': 'errors_'
+            'filename': 'errors.log',
+            'formatter': 'errors'
         },
         'security_log': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'logs/security.log',
-            'formatter': 'general_'
+            'filename': 'security.log',
+            'formatter': 'general'
         },
         'email': {
             'level': 'ERROR',
@@ -316,15 +316,15 @@ LOGGING = {
             'propagate': True,
         },
         'django.template': {
-            'handlers': ['errors_log'],
+            'handlers': ['errors_log', ],
             'propagate': True,
         },
         'django.db.backends': {
-            'handlers': ['errors_log'],
+            'handlers': ['errors_log', ],
             'propagate': True,
         },
         'django.security': {
-            'handlers': ['security_log'],
+            'handlers': ['security_log', ],
             'propagate': True,
         },
     }
