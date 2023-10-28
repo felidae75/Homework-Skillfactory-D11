@@ -1,5 +1,10 @@
 <footer class="footer mt-auto py-3 bg-light">
- <div class="container">
-   <span class="text-muted">Footer</span>
- </div>
+    {% load cache %}
+    {% cache 10 header %}
+    {% block header %}
+        <div class="container">
+        <span class="text-muted">Footer</span>
+        </div>
+    {% endblock header %}
+    {% endcache %}
 </footer>
