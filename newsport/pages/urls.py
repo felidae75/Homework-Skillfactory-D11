@@ -5,8 +5,8 @@ from .views import *
 
 app_name = 'pages'
 urlpatterns = [
-    path('', PostView.as_view(), name='posts_view'),
-    path('<int:pk>/', PostDetail.as_view(), name='post_detail'),
+    path('', cache_page(30)(PostView.as_view()), name='posts_view'),
+    path('<int:pk>/', cache_page(60)(PostDetail.as_view()), name='post_detail'),
     path('', PostsSort.as_view()),
     path('search/', PostSearch.as_view(), name='post_search'),
     path('user/', UserView.as_view(), name='user_page'),
